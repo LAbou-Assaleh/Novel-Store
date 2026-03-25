@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+
+project/.nks_config.json
+project/.current_novel
+project/backups/
+
+*.db
+*.sqlite
+*.sqlite3
+
+.DS_Store
+.idea/

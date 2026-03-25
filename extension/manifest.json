@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Novel Knowledge System",
+  "description": "Manage novels, characters, plans, traits, aspects, and relationships from a polished Chrome extension UI.",
+  "version": "0.1.0",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "Novel Knowledge System",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}

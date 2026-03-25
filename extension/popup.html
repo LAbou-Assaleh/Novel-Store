@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novel Knowledge System</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Chrome Extension</p>
+          <h1>Novel Knowledge System</h1>
+          <p class="subtle">Manage novels, characters, plans, and relationships without leaving the browser.</p>
+        </div>
+        <a class="secondary-link" href="options.html" target="_blank">Open Full Workspace</a>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Novels</h2>
+          <span id="activeNovelLabel" class="status-pill">No active novel</span>
+        </div>
+        <form id="novelForm" class="inline-form">
+          <input id="novelNameInput" type="text" placeholder="New novel name" required />
+          <button type="submit">Create + Switch</button>
+        </form>
+        <div id="novelList" class="chip-grid"></div>
+      </section>
+
+      <nav class="tab-row" id="tabRow">
+        <button class="tab-button active" data-tab="characters">Characters</button>
+        <button class="tab-button" data-tab="plans">Plans</button>
+        <button class="tab-button" data-tab="relations">Relations</button>
+        <button class="tab-button" data-tab="tables">Tables</button>
+      </nav>
+
+      <section id="charactersTab" class="tab-panel active">
+        <div class="two-column">
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Characters</h2>
+            </div>
+            <input id="characterSearchInput" type="search" placeholder="Search characters" />
+            <form id="characterForm" class="stack-form">
+              <input id="characterNameInput" type="text" placeholder="Character name" required />
+              <button type="submit">Create Character</button>
+            </form>
+            <div id="characterList" class="selector-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Character Detail</h2>
+              <button id="deleteCharacterButton" class="ghost danger" type="button" disabled>Delete</button>
+            </div>
+            <div id="characterEmpty" class="empty-state">Select a character to edit traits and aspects.</div>
+            <div id="characterDetail" class="detail-stack hidden">
+              <h3 id="characterTitle"></h3>
+              <div class="detail-block">
+                <label>Traits</label>
+                <form id="traitForm" class="inline-form">
+                  <input id="traitInput" type="text" placeholder="Add trait" />
+                  <button type="submit">Add</button>
+                </form>
+                <div id="traitList" class="pill-list"></div>
+              </div>
+              <div class="detail-block">
+                <label>Aspects</label>
+                <form id="aspectForm" class="stack-form compact">
+                  <input id="aspectNameInput" type="text" placeholder="Aspect name" />
+                  <input id="aspectValueInput" type="text" placeholder="Aspect value" />
+                  <button type="submit">Save Aspect</button>
+                </form>
+                <div id="aspectList" class="detail-list"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="plansTab" class="tab-panel">
+        <div class="two-column">
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Plans</h2>
+            </div>
+            <input id="planSearchInput" type="search" placeholder="Search plans" />
+            <form id="planForm" class="stack-form">
+              <input id="planNameInput" type="text" placeholder="Plan name" required />
+              <textarea id="planDescriptionInput" rows="3" placeholder="Plan description"></textarea>
+              <button type="submit">Create Plan</button>
+            </form>
+            <div id="planList" class="selector-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Plan Detail</h2>
+              <button id="deletePlanButton" class="ghost danger" type="button" disabled>Delete</button>
+            </div>
+            <div id="planEmpty" class="empty-state">Select a plan to review it.</div>
+            <div id="planDetail" class="detail-stack hidden">
+              <h3 id="planTitle"></h3>
+              <p id="planDescription" class="detail-copy"></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="relationsTab" class="tab-panel">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Create Relationship</h2>
+          </div>
+          <div class="relation-grid">
+            <div>
+              <label>Source</label>
+              <div id="sourceSelector" class="chip-grid"></div>
+            </div>
+            <div>
+              <label>Target</label>
+              <div id="targetSelector" class="chip-grid"></div>
+            </div>
+          </div>
+          <form id="relationForm" class="stack-form compact">
+            <input id="relationTypeInput" type="text" placeholder="Relation type" required />
+            <input id="relationNameInput" type="text" placeholder="Optional relation name" />
+            <button type="submit">Create Relationship</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Relationships</h2>
+          </div>
+          <input id="relationshipSearchInput" type="search" placeholder="Search relationships" />
+          <div id="relationshipList" class="detail-list"></div>
+        </article>
+      </section>
+
+      <section id="tablesTab" class="tab-panel">
+        <div class="two-column">
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Custom Tables</h2>
+            </div>
+            <input id="tableSearchInput" type="search" placeholder="Search custom tables" />
+            <form id="tableForm" class="stack-form">
+              <input id="tableNameInput" type="text" placeholder="Important aspect name" required />
+              <button type="submit">Create Table</button>
+            </form>
+            <div id="tableList" class="selector-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Table Values</h2>
+              <button id="deleteTableButton" class="ghost danger" type="button" disabled>Delete Table</button>
+            </div>
+            <div id="tableEmpty" class="empty-state">Select a custom table to add or review values.</div>
+            <div id="tableDetail" class="detail-stack hidden">
+              <h3 id="tableTitle"></h3>
+              <div class="detail-block">
+                <label>Choose character</label>
+                <div id="tableCharacterSelector" class="chip-grid"></div>
+              </div>
+              <div class="detail-block">
+                <label>Store value</label>
+                <form id="tableValueForm" class="inline-form">
+                  <input id="tableValueInput" type="text" placeholder="Value for selected character" />
+                  <button type="submit">Add</button>
+                </form>
+              </div>
+              <div id="tableValueList" class="detail-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <p id="toast" class="toast hidden"></p>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novel Knowledge System Workspace</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Workspace</p>
+          <h1>Extension Data Tools</h1>
+          <p class="subtle">Import and export your extension data to move between machines or save backups.</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Local Database Settings</h2>
+        </div>
+        <p class="subtle">Save the PostgreSQL database name, login, and password you want this extension to remember locally.</p>
+        <form id="databaseForm" class="stack-form">
+          <input id="databaseNameInput" type="text" placeholder="Database name" />
+          <input id="databaseLoginInput" type="text" placeholder="Database login" />
+          <input id="databasePasswordInput" type="password" placeholder="Database password" />
+          <button id="databaseSaveButton" type="submit">Save Database Settings</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Export</h2>
+        </div>
+        <button id="exportButton" type="button">Copy JSON Snapshot</button>
+        <button id="sqliteDownloadButton" type="button" class="ghost">Download SQLite Export</button>
+        <textarea id="exportOutput" rows="14" readonly placeholder="Exported data will appear here"></textarea>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Import</h2>
+        </div>
+        <textarea id="importInput" rows="14" placeholder="Paste a previously exported JSON snapshot"></textarea>
+        <button id="importButton" type="button">Import Snapshot</button>
+      </section>
+
+      <p id="statusMessage" class="toast hidden"></p>
+    </main>
+
+    <script type="module" src="options.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,373 @@
+\documentclass[11pt]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{courier}
+
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\title{\textbf{Novel Knowledge System (NKS)}\\Comprehensive CLI Documentation}
+\author{}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The \textbf{Novel Knowledge System (NKS)} is a CLI-based tool designed to manage structured data for novel writing. It integrates:
+
+\begin{itemize}
+    \item A relational SQL database for persistence
+    \item A graph-based relationship system for character links
+    \item A command-line interface optimized for real-time workflows
+\end{itemize}
+
+This document provides a complete reference of the supported commands, including syntax, explanations, and examples.
+
+\section{Command Format}
+
+All commands follow a consistent structure:
+
+\begin{verbatim}
+novel <entity> <action> <arguments> [options]
+\end{verbatim}
+
+When running the application without arguments, NKS starts an interactive shell with a \texttt{novel>} prompt. In that shell, commands may be entered either with the \texttt{novel} prefix or without it, and the session remains active until \texttt{exit} is entered.
+
+Placeholders are represented as:
+
+\begin{itemize}
+    \item \texttt{<novel>} -- Novel title
+    \item \texttt{<id>} -- Numeric identifier
+    \item \texttt{<name>} -- Entity name
+    \item \texttt{<text>} -- Free-form content
+\end{itemize}
+
+\section{1. Initialization and Configuration}
+
+\subsection{Interactive Shell}
+
+\textbf{Syntax}
+\begin{verbatim}
+python3 project/main.py
+\end{verbatim}
+
+\textbf{Description}
+
+Starts an iterative CLI session powered by \texttt{prompt\_toolkit}. The shell provides tab-completion for command phrases and common stored values such as novel titles, section names, and character names.
+
+\textbf{Example}
+\begin{verbatim}
+novel> help
+novel> create "The Great Swordman"
+novel> review report "The Great Swordman"
+novel> exit
+\end{verbatim}
+
+\subsection{novel init}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel init [--db <database_url>]
+\end{verbatim}
+
+\textbf{Description}
+
+Initializes the system by creating the database schema and writing a local configuration file. A database URL must be supplied by \texttt{--db}, \texttt{NKS\_DATABASE\_URL}, or the gitignored local config file.
+\newline
+\newline
+For privacy, connection credentials should be supplied through an explicit \texttt{--db} value, the \texttt{NKS\_DATABASE\_URL} environment variable, or the gitignored local config file.
+
+\textbf{Example}
+\begin{verbatim}
+NKS_DATABASE_URL="postgresql+psycopg://<user>:<password>@localhost:5432/novel_notes" novel init
+\end{verbatim}
+
+\subsection{novel migrate}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel migrate
+\end{verbatim}
+
+\textbf{Description}
+
+Ensures the configured schema exists for the active database.
+
+\subsection{novel backup create}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel backup create
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a JSON snapshot backup of the database contents.
+
+\section{2. Novel Management}
+
+\subsection{novel create}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel create "<novel>" [--genre <genre>] [--status <status>]
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a new novel entry.
+
+\textbf{Example}
+\begin{verbatim}
+novel create "The Great Swordman" --genre fantasy --status planning
+\end{verbatim}
+
+\subsection{novel list}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel list
+\end{verbatim}
+
+\textbf{Description}
+
+Displays all novels.
+
+\subsection{novel show}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel show "<novel>"
+\end{verbatim}
+
+\textbf{Description}
+
+Displays detailed information and record counts for a novel.
+
+\subsection{novel update}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel update "<novel>" [--status <status>] [--summary "<text>"] [--genre <genre>]
+\end{verbatim}
+
+\textbf{Description}
+
+Updates metadata for a novel.
+
+\section{3. Sections}
+
+\subsection{novel section add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel section add "<novel>" <section>
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a logical grouping such as \texttt{plot} or \texttt{world}.
+
+\section{4. Notes}
+
+\subsection{novel note add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel note add "<novel>" [--section <section>] [--title "<title>"] [--body "<text>"]
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a new note. When a section is provided and does not yet exist, it is created automatically.
+
+\subsection{novel note append}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel note append <id> "<text>"
+\end{verbatim}
+
+\textbf{Description}
+
+Appends content to an existing note.
+
+\subsection{novel note tag}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel note tag <id> <tag>
+\end{verbatim}
+
+\textbf{Description}
+
+Adds a tag to a note.
+
+\section{5. Characters}
+
+\subsection{novel character add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel character add "<novel>" "<name>" [--role <role>]
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a character.
+
+\subsection{novel character trait add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel character trait add "<novel>" "<name>" <trait>
+\end{verbatim}
+
+\textbf{Description}
+
+Adds a trait to a character.
+
+\section{6. Relationships}
+
+\subsection{novel relation add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel relation add "<novel>" "<char1>" "<char2>" <type>
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a relationship between characters.
+
+\section{7. Plot}
+
+\subsection{novel plot add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel plot add "<novel>" "<description>"
+\end{verbatim}
+
+\textbf{Description}
+
+Adds a plot point.
+
+\section{8. Chapters}
+
+\subsection{novel chapter add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel chapter add "<novel>" "<title>" [--number <num>]
+\end{verbatim}
+
+\textbf{Description}
+
+Creates a chapter.
+
+\section{9. Worldbuilding}
+
+\subsection{novel world place add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel world place add "<novel>" "<place>"
+\end{verbatim}
+
+\textbf{Description}
+
+Adds a location.
+
+\section{10. Timeline}
+
+\subsection{novel timeline add}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel timeline add "<novel>" "<event>" [--day <num>]
+\end{verbatim}
+
+\textbf{Description}
+
+Adds an event to the timeline.
+
+\section{11. Search}
+
+\subsection{novel search}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel search "<query>" [--type <entity>]
+\end{verbatim}
+
+\textbf{Description}
+
+Searches across all stored data. Supported type filters include \texttt{novel}, \texttt{section}, \texttt{note}, \texttt{character}, \texttt{relation}, \texttt{plot}, \texttt{chapter}, \texttt{place}, \texttt{timeline}, and \texttt{quick}.
+
+\section{12. Quick Capture}
+
+\subsection{novel quick}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel quick "<novel>" "<text>"
+\end{verbatim}
+
+\textbf{Description}
+
+Adds a fast, unstructured note.
+
+\section{13. Reporting}
+
+\subsection{novel review report}
+
+\textbf{Syntax}
+\begin{verbatim}
+novel review report "<novel>"
+\end{verbatim}
+
+\textbf{Description}
+
+Prints a compact inventory report for a novel.
+
+\section{14. Example Workflow}
+
+\begin{verbatim}
+novel init
+novel create "The Great Swordman"
+
+novel character add "The Great Swordman" "John Ashen"
+novel character add "The Great Swordman" "Jessica Vale"
+novel relation add "The Great Swordman" "John Ashen" "Jessica Vale" rival
+
+novel plot add "The Great Swordman" "John is expelled"
+novel chapter add "The Great Swordman" "Chapter 1"
+
+novel note add "The Great Swordman" --section world --title "Cultivation"
+novel quick "The Great Swordman" "Hidden bloodline idea"
+
+novel search "bloodline"
+novel review report "The Great Swordman"
+\end{verbatim}
+
+\section{Conclusion}
+
+The NKS CLI provides a scalable and structured approach to managing narrative data. It combines:
+
+\begin{itemize}
+    \item Structured SQL storage
+    \item Graph-based character relationships
+    \item Efficient CLI workflows
+\end{itemize}
+
+This enables both rapid idea capture and deeper structural organization.
+
+\end{document}

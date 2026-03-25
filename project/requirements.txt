@@ -1,0 +1,4 @@
+typer
+SQLAlchemy
+psycopg[binary]
+prompt_toolkit
