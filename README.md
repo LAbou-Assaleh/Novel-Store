@@ -53,7 +53,7 @@ Inside the shell:
 ```text
 novel> help
 novel> create "The Great Swordman"
-novel> character add "The Great Swordman" "John Ashen" --role protagonist
+novel> character add "The Great Swordman" "Klein" --role protagonist
 novel> exit
 ```
 
